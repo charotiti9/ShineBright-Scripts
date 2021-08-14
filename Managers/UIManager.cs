@@ -8,10 +8,10 @@ public class UIData : MonoBehaviour
 }
 
 
-public class HJ_UIManager : UIData {
+public class UIManager : UIData {
 
     // 싱글톤
-    public static HJ_UIManager Instance;
+    public static UIManager Instance;
     private void Awake()
     {
         if (Instance == null)

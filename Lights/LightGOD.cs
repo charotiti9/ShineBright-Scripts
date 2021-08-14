@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HJ_LightGOD : MonoBehaviour
+public class LightGOD : MonoBehaviour
 {
 
     #region 전역변수
@@ -61,7 +61,7 @@ public class HJ_LightGOD : MonoBehaviour
     #endregion
 
     // 싱글톤
-    public static HJ_LightGOD Instance;
+    public static LightGOD Instance;
     private void Awake()
     {
         if (Instance == null)
@@ -94,7 +94,7 @@ public class HJ_LightGOD : MonoBehaviour
 
         if (colors == null)
         {
-            colors = HJ_ThemeManager.Instance.themes[0].themeColor;
+            colors = ThemeManager.Instance.themes[0].themeColor;
         }
     }
 
@@ -208,22 +208,22 @@ public class HJ_LightGOD : MonoBehaviour
 
         // 진폭 시작
         // 현재스코어 > 진폭 꺼졌던 스코어 + 현재랜덤스코어
-        if (!isAmpStarted && HJ_ScoreManager.Instance.Score > ampEndedScore + ampOnScore)
+        if (!isAmpStarted && ScoreManager.Instance.Score > ampEndedScore + ampOnScore)
         {
             // 진폭 시작할 수 있도록 한다
             isAmpStarted = true;
             // 진폭이 시작된 이전 스코어를 저장
-            ampStartedScore = HJ_ScoreManager.Instance.Score;
+            ampStartedScore = ScoreManager.Instance.Score;
             // 다음 진폭 시작 스코어를 정해준다
             ampOnScore = Random.Range(ampMinScore, ampMaxScore);
         }
         // 진폭이 시작된 스코어 + 일정스코어 이상 넘어가면
         // 진폭 꺼진다
-        else if (isAmpStarted && HJ_ScoreManager.Instance.Score > ampStartedScore + ampOffScore)
+        else if (isAmpStarted && ScoreManager.Instance.Score > ampStartedScore + ampOffScore)
         {
             isAmpStarted = false;
             // 진폭 꺼지는 이전 스코어를 저장
-            ampEndedScore = HJ_ScoreManager.Instance.Score;
+            ampEndedScore = ScoreManager.Instance.Score;
             // 다음 진폭 꺼지는 스코어를 정해준다
             ampOffScore = Random.Range(ampMinScore, ampMaxScore);
         }
@@ -277,7 +277,7 @@ public class HJ_LightGOD : MonoBehaviour
         // 새롭게 생성시간을 조절한다
         // 추가 시간 = 현재원 / max원
         // 시간 = 생성시간 - 추가시간
-        if (!HJ_DelayZone.Instance.isSoFast)
+        if (!DelayZone.Instance.isSoFast)
         {
             minusTime = preSize / maxSize;
         }
@@ -285,7 +285,7 @@ public class HJ_LightGOD : MonoBehaviour
         {
             minusTime = 1f;
             // 초기화
-            HJ_DelayZone.Instance.isSoFast = false;
+            DelayZone.Instance.isSoFast = false;
         }
     }
 }

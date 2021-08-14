@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class HJ_GeneralShare : MonoBehaviour {
+public class GeneralShare : MonoBehaviour {
 
     public GameObject ShareButtons;
     bool firstCount;                        // 첫번째 실행인지 체크하기 위한 변수
@@ -12,8 +12,8 @@ public class HJ_GeneralShare : MonoBehaviour {
     {
         if (!firstCount)
         {
-            //HJ_GameCenterManager.Instance.CheckSucessAchievement(HJ_GameCenterManager.MyAchievement.ShareYourLight);
-            HJ_GameCenterManager.Instance.SuccessDeviceAchievement(HJ_GameCenterManager.MyAchievement.ShareYourLight);
+            //GameCenterManager.Instance.CheckSucessAchievement(GameCenterManager.MyAchievement.ShareYourLight);
+            GameCenterManager.Instance.SuccessDeviceAchievement(GameCenterManager.MyAchievement.ShareYourLight);
             firstCount = true;
         }
 
@@ -21,7 +21,7 @@ public class HJ_GeneralShare : MonoBehaviour {
         ShareButtons.SetActive(false);
 
         new NativeShare().AddFile(GetPicture.GetLastPicturePath()).SetSubject("Shine Bright")
-            .SetText("Now Playing♪: " + HJ_AudioManager.Instance.audios[0].clip.name + ", \n"
+            .SetText("Now Playing♪: " + AudioManager.Instance.audios[0].clip.name + ", \n"
             + "Download Link: https://play.google.com/store/apps/details?id=com.TeamSalmon.ShineBright \n" +
             " #ShineBright").Share();
     }

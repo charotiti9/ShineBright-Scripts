@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.PostProcessing;
 
-public class HJ_GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
 
     #region 전역변수
@@ -32,7 +32,7 @@ public class HJ_GameManager : MonoBehaviour
     #endregion
 
     // 오디오매니저
-    HJ_AudioManager audioManager;
+    AudioManager audioManager;
 
     [HideInInspector]
     public int nowState;                         // Pause상태에서도 현재 어떤 상태인지 체크할 수 있다
@@ -67,7 +67,7 @@ public class HJ_GameManager : MonoBehaviour
     public GameState gState;
 
     // 싱글톤
-    public static HJ_GameManager Instance;
+    public static GameManager Instance;
     private void Awake()
     {
         if (Instance == null)
@@ -91,7 +91,7 @@ public class HJ_GameManager : MonoBehaviour
         post = Camera.main.GetComponent<PostProcessingBehaviour>();
         setting = post.profile.bloom.settings;
 
-        audioManager = GameObject.Find("AudioManager").GetComponent<HJ_AudioManager>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
 
         // 호진오빠가 추가
         // "Slide To Move" 문구 이후 사용자 터치 유도 이미지 표시를 위한 오브젝트 가져오기
@@ -150,18 +150,18 @@ public class HJ_GameManager : MonoBehaviour
         // 빗소리와 음악 시작
         if (!audioManager.audios[0].isPlaying)
         {
-            audioManager.BGPlay(HJ_AudioManager.BGSounds.BG_1);
+            audioManager.BGPlay(AudioManager.BGSounds.BG_1);
         }
         if (!audioManager.audios[1].isPlaying)
         {
-            audioManager.RainPlay(HJ_AudioManager.RainSound.Rain);
+            audioManager.RainPlay(AudioManager.RainSound.Rain);
         }
 
         // 상태저장
         nowState = 0;
 
         // UI
-        HJ_UIManager.Instance.SetPageUI(HJ_UIManager.Page.Home);
+        UIManager.Instance.SetPageUI(UIManager.Page.Home);
         // Home 상태로
         gState = GameState.Home;
         StartCoroutine("Title");
@@ -169,7 +169,7 @@ public class HJ_GameManager : MonoBehaviour
     private void InitializeGame()
     {
         // 스코어 초기화
-        HJ_ScoreManager.Instance.Score = 0;
+        ScoreManager.Instance.Score = 0;
         youCanDead = false;
         youCanPauseEsc = true;
         // 카메라 멈춤
@@ -283,7 +283,7 @@ public class HJ_GameManager : MonoBehaviour
         // Play 상태로 간다
         gState = GameState.Play;
         // UI
-        HJ_UIManager.Instance.SetPageUI(HJ_UIManager.Page.Play);
+        UIManager.Instance.SetPageUI(UIManager.Page.Play);
     }
 
     IEnumerator BefroePlayCountDown()
@@ -297,7 +297,7 @@ public class HJ_GameManager : MonoBehaviour
         // 1
         countText.text = "1";
         // 빛번짐 시작
-        GameObject.Find("LightGOD").GetComponent<HJ_LightGOD>().enabled = true;
+        GameObject.Find("LightGOD").GetComponent<LightGOD>().enabled = true;
         yield return new WaitForSeconds(1);
         // DIE 체크
         youCanDead = true;
@@ -323,7 +323,7 @@ public class HJ_GameManager : MonoBehaviour
     private void Play()
     {
         // 스코어가 100 이하라면
-        if (HJ_ScoreManager.Instance.Score < 100)
+        if (ScoreManager.Instance.Score < 100)
         {
             //tutorialWorldCanvas.SetActive(true);
             // 플레이어를 조작하고 있지 않다면
@@ -377,7 +377,7 @@ public class HJ_GameManager : MonoBehaviour
         // Play 상태로 간다
         gState = GameState.Play;
         // UI
-        HJ_UIManager.Instance.SetPageUI(HJ_UIManager.Page.Play);
+        UIManager.Instance.SetPageUI(UIManager.Page.Play);
 
         // Die 체크 끔
         youCanDead = false;
@@ -393,7 +393,7 @@ public class HJ_GameManager : MonoBehaviour
         // 1
         // 빛번짐 시작
         Time.timeScale = 1.0f;
-        GameObject.Find("LightGOD").GetComponent<HJ_LightGOD>().enabled = true;
+        GameObject.Find("LightGOD").GetComponent<LightGOD>().enabled = true;
         countText.text = "1";
         isPause = false;
         yield return new WaitForSecondsRealtime(1);
@@ -419,27 +419,27 @@ public class HJ_GameManager : MonoBehaviour
         nowState = 2;
 
         // UI
-        HJ_UIManager.Instance.SetPageUI(HJ_UIManager.Page.Over);
+        UIManager.Instance.SetPageUI(UIManager.Page.Over);
         fingerSlide.SetActive(false);
 
         // 다이상태 효과음
-        HJ_AudioManager.Instance.DiePlay((HJ_AudioManager.DieSound)UnityEngine.Random.Range(0, 2));
+        AudioManager.Instance.DiePlay((AudioManager.DieSound)UnityEngine.Random.Range(0, 2));
 
         //  만약 탑 스코어보다 현재 스코어가 높다면
-        if (HJ_ScoreManager.Instance.Score > HJ_ScoreManager.Instance.topScore)
+        if (ScoreManager.Instance.Score > ScoreManager.Instance.topScore)
         {
             // 탑스코어 = 현재 스코어
-            HJ_ScoreManager.Instance.topScore = HJ_ScoreManager.Instance.Score;
+            ScoreManager.Instance.topScore = ScoreManager.Instance.Score;
             // 기기에 저장
-            PlayerPrefs.SetInt("TopScore", HJ_ScoreManager.Instance.topScore);
+            PlayerPrefs.SetInt("TopScore", ScoreManager.Instance.topScore);
             // 탑스코어 texet 갱신
-            for (int i = 0; i < HJ_ScoreManager.Instance.topScoreText.Length; i++)
+            for (int i = 0; i < ScoreManager.Instance.topScoreText.Length; i++)
             {
-                HJ_ScoreManager.Instance.topScoreText[i].text = "" + HJ_ScoreManager.Instance.topScore;
+                ScoreManager.Instance.topScoreText[i].text = "" + ScoreManager.Instance.topScore;
             }
 
             //// 랭킹에 저장
-            //HJ_GameCenterManager.Instance.ReportScore(HJ_ScoreManager.Instance.topScore);
+            //GameCenterManager.Instance.ReportScore(ScoreManager.Instance.topScore);
         }
 
         // 게임오버 상태로 간다
@@ -467,14 +467,14 @@ public class HJ_GameManager : MonoBehaviour
         countText.text = "";
 
         // 사운드 재생
-        HJ_AudioManager.Instance.UiPlay((HJ_AudioManager.UiSound)UnityEngine.Random.Range(0, 5));
+        AudioManager.Instance.UiPlay((AudioManager.UiSound)UnityEngine.Random.Range(0, 5));
 
         // 튜토리얼 체크
-        HJ_TutorialManager.Instance.CheckTutorial_Button();
+        TutorialManager.Instance.CheckTutorial_Button();
 
         // 비활성화
         fingerSlide.SetActive(false);
-        HJ_UIManager.Instance.SetPageUI(HJ_UIManager.Page.Pause);
+        UIManager.Instance.SetPageUI(UIManager.Page.Pause);
 
         // 시간이 멈춘다
         Time.timeScale = 0.0f;
@@ -490,14 +490,14 @@ public class HJ_GameManager : MonoBehaviour
     {
         // ========= 호진 ==========
         // 1. 만약 처음 들어왔다면 firstcount를 1로 만들어준다.
-        if (escDown && HJ_UIManager.Instance._currentPage != HJ_UIManager.Page.Pause && firstCount == 0)
+        if (escDown && UIManager.Instance._currentPage != UIManager.Page.Pause && firstCount == 0)
         {
             print("처음 옴");
             firstCount=1;
         }
         // 2. pause Page에서 한 번 더 뒤로가기를 눌렀을 경우(firstcount == 1), 토스트메시지 출력한다.
         //  - 현재 Page 가 Setting 이라면 토스트 메시지를 한번 띄워주고 그 상태에서 한 번 더 누르면 종료시킨다
-        else if (escDown && HJ_UIManager.Instance._currentPage == HJ_UIManager.Page.Pause && firstCount == 1)
+        else if (escDown && UIManager.Instance._currentPage == UIManager.Page.Pause && firstCount == 1)
         {
             print("토스트메시지 띄움");
             // toast message가 출력되는 동안 체크 
@@ -507,7 +507,7 @@ public class HJ_GameManager : MonoBehaviour
         }
         // 3. 토스트메시지가 띄어진 상태(firsutcount==2)에서 뒤로가기버튼을 누르면 종료된다.
         //  - ToastMessage 가 띄어진 상태에서 한 번 더 뒤로가기 버튼을 누르면 종료
-        else if (escDown && HJ_UIManager.Instance._currentPage == HJ_UIManager.Page.Pause && firstCount == 2)
+        else if (escDown && UIManager.Instance._currentPage == UIManager.Page.Pause && firstCount == 2)
         {
             print("종료");
             // 토스트메시지 취소

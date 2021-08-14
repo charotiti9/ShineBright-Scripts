@@ -11,7 +11,7 @@ public class MyUiText : Text {
 
     void Update()
     {
-        loc = HJ_LanguageManager.nowLoc;
+        loc = LanguageManager.nowLoc;
         this.text = LanguagesData.Instance.GetData(UID, loc);
     }
 }

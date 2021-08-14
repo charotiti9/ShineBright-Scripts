@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HJ_AudioManager : MonoBehaviour {
+public class AudioManager : MonoBehaviour {
 
     // 스스로 몇개 있는지 검사
     GameObject[] audioGameObject;
@@ -59,7 +59,7 @@ public class HJ_AudioManager : MonoBehaviour {
     #endregion
 
     // 싱글톤
-    public static HJ_AudioManager Instance;
+    public static AudioManager Instance;
     private void Awake()
     {
         if (Instance == null)
@@ -141,7 +141,7 @@ public class HJ_AudioManager : MonoBehaviour {
 
     private void Update()
     {
-        if (HJ_GameManager.Instance.gState == HJ_GameManager.GameState.Pause)
+        if (GameManager.Instance.gState == GameManager.GameState.Pause)
         {
             audios[0].volume = volumeBar[0].value;
             audios[1].volume = volumeBar[1].value;

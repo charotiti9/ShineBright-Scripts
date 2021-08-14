@@ -6,11 +6,11 @@ using GooglePlayGames;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
-public class HJ_GameCenterManager : MonoBehaviour
+public class GameCenterManager : MonoBehaviour
 {
     // 업적 달성용
     // SignIn을 하지 않더라도, 각각 따로 true/false를 기기에서 판별하여 보상을 준다
-    // <HJ_GameCenterManager>
+    // <GameCenterManager>
     // - 업적에 따라 6개의 크기 만들기
     // - PlayrPrefs로 저장
     // - 업적을 달성하면 achieveDeviceSuccess[(int)MyAchievement.TutorialClear] = true;
@@ -21,7 +21,7 @@ public class HJ_GameCenterManager : MonoBehaviour
     // achieveDeviceSuccess로 달성 여부를 판별한다.
 
     // <각 달성시 호출되는 스크립트>
-    // 달성시 HJ_GameCenterManager.Instance.SuccessDeviceAchievement(HJ_GameCenterManager.MyAchievement.~);
+    // 달성시 GameCenterManager.Instance.SuccessDeviceAchievement(GameCenterManager.MyAchievement.~);
 
     // <RewardCanvas>
     // - isClear = achieveDeviceSuccess[(int)MyAchievement.TutorialClear] 로 판별
@@ -54,7 +54,7 @@ public class HJ_GameCenterManager : MonoBehaviour
     };
 
     // 싱글톤
-    public static HJ_GameCenterManager Instance;
+    public static GameCenterManager Instance;
     void Awake()
     {
         if (Instance == null)
@@ -566,7 +566,7 @@ public class HJ_GameCenterManager : MonoBehaviour
     {
         // 내가 연결하게 될 것이다
         PlayGamesPlatform.Activate();
-        //ReportScore(HJ_ScoreManager.Instance.topScore);
+        //ReportScore(ScoreManager.Instance.topScore);
         Social.localUser.Authenticate(AuthenticateHandler);
     }
 
@@ -575,7 +575,7 @@ public class HJ_GameCenterManager : MonoBehaviour
     {
         if (isSuccess)
         {
-            int highScore = HJ_ScoreManager.Instance.topScore;
+            int highScore = ScoreManager.Instance.topScore;
             Social.ReportScore(highScore, leaderboard, (bool success) =>
             {
                 if (success)

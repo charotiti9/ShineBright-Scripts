@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HJ_LanguageManager : MonoBehaviour
+public class LanguageManager : MonoBehaviour
 {
     // 현재 로케이션
     public static Location nowLoc;
 
     // 싱글톤
-    public static HJ_LanguageManager _Instance;
-    public static HJ_LanguageManager Instance
+    public static LanguageManager _Instance;
+    public static LanguageManager Instance
     {
         get
         {
             if (_Instance == null)
             {
-                _Instance = new HJ_LanguageManager();
+                _Instance = new LanguageManager();
             }
             return _Instance;
         }

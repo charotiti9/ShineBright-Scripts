@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HJ_Light : MonoBehaviour {
+public class Light : MonoBehaviour {
 
-    // 태어나고 HJ_LightGOD에서 preSize를 받아와서
+    // 태어나고 LightGOD에서 preSize를 받아와서
     // Lerp 로 커진다
     float scaleSpeed = 5;
     float rotSpeed = 6;
@@ -33,7 +33,7 @@ public class HJ_Light : MonoBehaviour {
         // 초기화
         transform.localScale = Vector3.zero;
         transform.rotation = Quaternion.identity;
-        size = HJ_LightGOD.Instance.nowSize;
+        size = LightGOD.Instance.nowSize;
         // 커지고 회전값 지정하는거 실행
         StartCoroutine("SizeUp");
         // 나의 알파값 저장
@@ -43,7 +43,7 @@ public class HJ_Light : MonoBehaviour {
 
     private void Update()
     {
-        if (!isOver && HJ_GameManager.Instance.gState == HJ_GameManager.GameState.Over)
+        if (!isOver && GameManager.Instance.gState == GameManager.GameState.Over)
         {
             isOver = true;
             StopCoroutine("SizeUp");
@@ -73,7 +73,7 @@ public class HJ_Light : MonoBehaviour {
             yield return new WaitForSecondsRealtime(ranTime);
 
             // 랜덤한 알파값으로 바뀐다
-            newAlpha = Random.Range(HJ_LightGOD.Instance.minAlpha, HJ_LightGOD.Instance.maxAlpha);
+            newAlpha = Random.Range(LightGOD.Instance.minAlpha, LightGOD.Instance.maxAlpha);
             while (GetComponent<SpriteRenderer>().color.a != newAlpha)
             {
                 //GetComponent<SpriteRenderer>().color = new Color(myColor.r, myColor.g, myColor.b, newAlpha);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HJ_ThemeManager : MonoBehaviour
+public class ThemeManager : MonoBehaviour
 {
     // 테마 저장
     [System.Serializable]
@@ -20,7 +20,7 @@ public class HJ_ThemeManager : MonoBehaviour
     public ThemeData[] themes = new ThemeData[4];
 
     // 싱글톤
-    public static HJ_ThemeManager Instance;
+    public static ThemeManager Instance;
     private void Awake()
     {
         if (Instance == null)

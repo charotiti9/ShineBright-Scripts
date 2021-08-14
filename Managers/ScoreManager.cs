@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HJ_ScoreManager : MonoBehaviour {
+public class ScoreManager : MonoBehaviour {
 
     // 스코어
     int score;
@@ -19,7 +19,7 @@ public class HJ_ScoreManager : MonoBehaviour {
     // 업적 달성용 확인 카운트
     bool firstCount;
     // 싱글톤
-    public static HJ_ScoreManager Instance;
+    public static ScoreManager Instance;
     private void Awake()
     {
         if (Instance == null)
@@ -74,8 +74,8 @@ public class HJ_ScoreManager : MonoBehaviour {
             }
             // 만일 거리가 1000 이상이 되면 "Deep City Light" 업적 완료 
             if(!firstCount && score >= 1000){
-                //HJ_GameCenterManager.Instance.CheckSucessAchievement(HJ_GameCenterManager.MyAchievement.DeepCityLight);
-                HJ_GameCenterManager.Instance.SuccessDeviceAchievement(HJ_GameCenterManager.MyAchievement.DeepCityLight);
+                //GameCenterManager.Instance.CheckSucessAchievement(GameCenterManager.MyAchievement.DeepCityLight);
+                GameCenterManager.Instance.SuccessDeviceAchievement(GameCenterManager.MyAchievement.DeepCityLight);
                 firstCount = true;
             }
         }

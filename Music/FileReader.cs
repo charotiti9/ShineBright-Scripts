@@ -86,7 +86,7 @@ public class FileReader : MonoBehaviour
             customClipButtonPool[i] = customClipButton;
             customClipButtonPool[i].SetActive(false);
         }
-        defaultClipButtonPool = new GameObject[HJ_AudioManager.Instance.bgmClips.Length];
+        defaultClipButtonPool = new GameObject[AudioManager.Instance.bgmClips.Length];
         for (int i = 0; i < defaultClipButtonPool.Length; i++)
         {
             GameObject defaultClipButton = Instantiate(defaultClipButtonFactory, gridImage);
@@ -117,7 +117,7 @@ public class FileReader : MonoBehaviour
 
     public void SearchYes_Button()
     {
-        HJ_AudioManager.Instance.UiPlay((HJ_AudioManager.UiSound)UnityEngine.Random.Range(0, 5));
+        AudioManager.Instance.UiPlay((AudioManager.UiSound)UnityEngine.Random.Range(0, 5));
         GetComponent<MusicUICanvas_B>().SetPageUI(MusicUICanvas_B.MusicPage.SearchMusic);
         StartCoroutine("SearchMusic");
     }
@@ -284,7 +284,7 @@ public class FileReader : MonoBehaviour
         searchMusic.gameObject.SetActive(false);
 
         // 다시 일시정지 가능
-        HJ_GameManager.Instance.youCanPauseEsc = true;
+        GameManager.Instance.youCanPauseEsc = true;
     }
 
 
@@ -318,9 +318,9 @@ public class FileReader : MonoBehaviour
         {
             defaultClipButtonPool[i].SetActive(true);
             // 이름 바꿔주기
-            defaultClipButtonPool[i].GetComponentInChildren<Text>().text = HJ_AudioManager.Instance.bgmClips[i].name;
+            defaultClipButtonPool[i].GetComponentInChildren<Text>().text = AudioManager.Instance.bgmClips[i].name;
             // 클립 패스 넘겨주기
-            defaultClipButtonPool[i].GetComponentInChildren<ClipSelectButton>().musicClip = HJ_AudioManager.Instance.bgmClips[i];
+            defaultClipButtonPool[i].GetComponentInChildren<ClipSelectButton>().musicClip = AudioManager.Instance.bgmClips[i];
         }
 
         // 비활성화
