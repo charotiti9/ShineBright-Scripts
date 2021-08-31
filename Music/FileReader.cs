@@ -57,11 +57,8 @@ public class FileReader : MonoBehaviour
     // 중복인지 검사
     bool isTwice;
 
-
-
     // UI
-    public MyUiText searchMusicText;
-    public Text searchMusic;
+    public Text searchMusicText;
 
     // 싱글톤
     public static FileReader Instance;
@@ -115,10 +112,10 @@ public class FileReader : MonoBehaviour
 
     }
 
-    public void SearchYes_Button()
+    public void SearchYesutton()
     {
         AudioManager.Instance.UiPlay((AudioManager.UiSound)UnityEngine.Random.Range(0, 5));
-        GetComponent<MusicUICanvas_B>().SetPageUI(MusicUICanvas_B.MusicPage.SearchMusic);
+        GetComponent<MusicUICanvas>().SetPageUI(MusicUICanvas.MusicPage.SearchMusic);
         StartCoroutine("SearchMusic");
     }
 
@@ -136,58 +133,40 @@ public class FileReader : MonoBehaviour
 
         // 리스트 작성중 text 활성화
         searchMusicText.gameObject.SetActive(true);
-        searchMusic.gameObject.SetActive(true);
 
         #region 루트폴더 검색
+#if UNITY_ANDROID
         // 만약 안드로이드라면
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            searchMusicText.UID = "SEARCHFOLDER";
-            yield return new WaitForSecondsRealtime(1f);
+        searchMusicText.UID = "SEARCHFOLDER";
+        yield return new WaitForSecondsRealtime(1f);
 
-            // 길이만큼 검색
-            for (int i = 0; i < androidRootlDirs.Length; i++)
+        // 길이만큼 검색
+        for (int i = 0; i < androidRootlDirs.Length; i++)
+        {
+            // 존재한다면
+            if (Directory.Exists(androidRootlDirs[i]))
             {
-                // 존재한다면
-                if (Directory.Exists(androidRootlDirs[i]))
-                {
-                    // 존재하는 파일경로 저장
-                    rootPaths.Add(androidRootlDirs[i]);
-                    //musicText.text = "루트파일 " + i + "번 째: " + androidRootlDirs[i];
-                    //yield return new WaitForSecondsRealtime(2f);
-                }
-                else
-                {
-                    //musicText.text = "루트파일 " + i + "번 째: " + androidRootlDirs[i] + "는 없습니다.";
-                    //yield return new WaitForSecondsRealtime(2f);
-                }
+                // 존재하는 파일경로 저장
+                rootPaths.Add(androidRootlDirs[i]);
             }
         }
-        // 윈도우라면
-        else if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
-        {
-            searchMusicText.UID = "SEARCHFOLDER";
-            yield return new WaitForSecondsRealtime(1f);
+        
+#endif
+#if UNITY_EDITOR
 
-            for (int i = 0; i < windowRootlDirs.Length; i++)
+        searchMusicText.UID = "SEARCHFOLDER";
+        yield return new WaitForSecondsRealtime(1f);
+
+        for (int i = 0; i < windowRootlDirs.Length; i++)
+        {
+            if (Directory.Exists(windowRootlDirs[i]))
             {
-                if (Directory.Exists(windowRootlDirs[i]))
-                {
-                    rootPaths.Add(windowRootlDirs[i]);
-                    //musicText.text = "루트파일 " + i + "번 째: " + windowRootlDirs[i];
-                    //yield return new WaitForSecondsRealtime(0.5f);
-                }
-                else
-                {
-                    //musicText.text = "루트파일 " + i + "번 째: " + windowRootlDirs[i] + "는 없습니다.";
-                    //yield return new WaitForSecondsRealtime(0.5f);
-                }
+                rootPaths.Add(windowRootlDirs[i]);
             }
         }
+        
+#endif
         #endregion
-
-        //musicText.text = "루트파일 검사 완료, 갯수: " + rootPaths.Count;
-        //yield return new WaitForSecondsRealtime(1f);
 
         searchMusicText.UID = "SEARCHCLIP";
         yield return new WaitForSecondsRealtime(1f);
@@ -205,15 +184,9 @@ public class FileReader : MonoBehaviour
             // 파일의 타입만큼 반복
             for (int j = 0; j < fildTypes.Length; j++)
             {
-                //musicText.text = rootFolder[i] + "의 하위 폴더 중" + fildTypes[j] + "확장자를 검색중입니다.";
-                //yield return new WaitForSecondsRealtime(1f);
 
                 // 서브파일을 저장
                 subFile = rootFolder[i].GetFiles(fildTypes[j], SearchOption.AllDirectories);
-
-                //musicText.text = rootFolder[i] + "의 하위 폴더 중" + fildTypes[j] + " 확장자의 갯수: " + subFile.Length;
-                //musicText.text = "found " + subFile.Length + " '" + fildTypes[j] + "' files";
-                //yield return new WaitForSecondsRealtime(0.5f);
 
                 // 서브파일의 갯수만큼 반복
                 foreach (FileInfo file in subFile)
@@ -274,7 +247,7 @@ public class FileReader : MonoBehaviour
         yield return new WaitForSecondsRealtime(1f);
 
         // UI
-        GetComponent<MusicUICanvas_B>().SetPageUI(MusicUICanvas_B.MusicPage.CustomList);
+        GetComponent<MusicUICanvas>().SetPageUI(MusicUICanvas.MusicPage.CustomList);
 
         // 클립 리스트 설정
         CheckCustomClipList();
@@ -423,6 +396,6 @@ public class FileReader : MonoBehaviour
         {
             Destroy(customPlusClips[i]);
         }
-        
+
     }
 }

@@ -151,8 +151,7 @@ public class LightGOD : MonoBehaviour
             }
         }
     }
-
-    //----------호진------------
+    
     void CreateComboStar(int index)
     {
 

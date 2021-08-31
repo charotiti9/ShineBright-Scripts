@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class GetPicture : MonoBehaviour {
+public class GetPicture : MonoBehaviour
+{
 
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if UNITY_ANDROID
     private static AndroidJavaClass m_ajc = null;
     private static AndroidJavaClass AJC
     {
@@ -23,7 +24,7 @@ public class GetPicture : MonoBehaviour {
     {
         List<string> shotFiles = new List<string>();
         string saveDir;
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if UNITY_ANDROID
 		saveDir = AJC.CallStatic<string>( "GetMediaPath", "Shine Bright" );
 #else
         saveDir = Application.persistentDataPath;
@@ -45,6 +46,4 @@ public class GetPicture : MonoBehaviour {
         }
         return null;
     }
-
-
 }

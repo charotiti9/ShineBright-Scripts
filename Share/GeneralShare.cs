@@ -12,7 +12,6 @@ public class GeneralShare : MonoBehaviour {
     {
         if (!firstCount)
         {
-            //GameCenterManager.Instance.CheckSucessAchievement(GameCenterManager.MyAchievement.ShareYourLight);
             GameCenterManager.Instance.SuccessDeviceAchievement(GameCenterManager.MyAchievement.ShareYourLight);
             firstCount = true;
         }

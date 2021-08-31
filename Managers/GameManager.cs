@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour
     public GameObject fingerSlide;              // 튜토리얼의 핑거슬라이드
     public Text countText;
 
-    // 호진오빠가 추가한 것
     GameObject playerRound;                     // 플레이어 주변을 도는 원 객체
     Image playerRoundImg;                       // 플레이어 주변을 도는 원 객체의 이미지 자체
     #endregion
@@ -93,7 +92,6 @@ public class GameManager : MonoBehaviour
 
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
 
-        // 호진오빠가 추가
         // "Slide To Move" 문구 이후 사용자 터치 유도 이미지 표시를 위한 오브젝트 가져오기
         playerRound = player.transform.Find("Canvas").gameObject;
         playerRoundImg = playerRound.transform.GetChild(0).GetComponent<Image>();
@@ -488,7 +486,6 @@ public class GameManager : MonoBehaviour
     // Android 에서 BackKey를 누르면 뒤로 이동(Setting 화면)하고 종료시키고 싶다.
     void AndroidBackKey()
     {
-        // ========= 호진 ==========
         // 1. 만약 처음 들어왔다면 firstcount를 1로 만들어준다.
         if (escDown && UIManager.Instance._currentPage != UIManager.Page.Pause && firstCount == 0)
         {

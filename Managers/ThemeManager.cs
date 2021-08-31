@@ -42,18 +42,6 @@ public class ThemeManager : MonoBehaviour
             SavePurchased();
         }
 
-        //// 저장된 테마가격이 있을때 ==> 불러온다
-        //if (PlayerPrefs.HasKey("ThemePrice"))
-        //{
-        //    LoadThemePrice();
-        //}
-        //// 저장된 테마가격이 없을때 ==> 저장해놓는다
-        //else
-        //{
-        //    SaveThemePrice();
-        //}
-
-
         // 저장된 현재 테마
         if (PlayerPrefs.HasKey("NowTheme"))
         {
@@ -77,40 +65,7 @@ public class ThemeManager : MonoBehaviour
         SavePurchased();
         //SaveThemePrice();
     }
-    //// 저장하기
-    //void SaveThemePrice()
-    //{
-    //    string themeSaveStr = "";
-    //    // 테마의 갯수만큼 반복
-    //    for (int i = 0; i < themes.Length; i++)
-    //    {
-    //        // 만약 구매한 거라면 가격은 0!
-    //        if (themes[i].isPurchased)
-    //        {
-    //            themes[i].themeMoney = 0;
-    //        }
-
-    //        themeSaveStr = themeSaveStr + themes[i].themeMoney;
-    //        if (i < themes.Length - 1)
-    //        {
-    //            themeSaveStr = themeSaveStr + ",";
-    //        }
-    //    }
-    //    PlayerPrefs.SetString("ThemePrice", themeSaveStr);
-    //}
-    //// 불러오기
-    //void LoadThemePrice()
-    //{
-    //    //string[] themeLoadStr = PlayerPrefs.GetString("ThemePrice").Split(',');
-    //    //int[] themeLoadInt = new int[themeLoadStr.Length];
-    //    for (int i = 0; i < themes.Length; i++)
-    //    {
-    //        //themeLoadInt[i] = System.Convert.ToInt32(themeLoadStr[i]);
-    //        //themes[i].themeMoney = themeLoadInt[i];
-
-    //    }
-    //}
-
+    
     // 테마 구매 여부 저장하기
     void SavePurchased()
     {
